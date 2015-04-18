@@ -45,6 +45,9 @@ Add features that need to be done, and mark your name if you are working on it.
 * Level loading/scrolling
 * Something to define levels - bg layers and enemy distribution
 * Slot machine functionality for mixing and matching weapon bits, arrays of
-  available weapon classes, available graphics, and 3rd property (scale?,
-  projectile speed?, projectile rate of fire? One of these properties at
-  random? All are externally setable on all weapon classes)
+  available weapon classes, available graphics, and third array could contain
+  dicts of the other options that all Weapons share. Extra fast or high rate
+  of fire, or large bullets, or bullets that grow over time.
+* Art - lots of ridiculous weapon sprites
+* If there is time - a couple weapons that shift gravity over time to create
+  sine wave patterns or bullets that circle while moving in a direction.
