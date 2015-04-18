@@ -43,8 +43,7 @@ function compile(shouldWatch) {
     browserify('./src/js/main.js', {
       debug: true,
       paths: ['./src/js/'],
-      external: './src/js/**/*.js',
-      transform: ['browserify-shim']
+      external: './src/js/**/*.js'
     }).transform(babel)
   );
 

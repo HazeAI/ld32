@@ -1,6 +1,6 @@
 {
   "browser": true,
-  "jquery": false,
+  "browserify": true,
   "node": true,
   "camelcase": true,
   "eqeqeq": true,
@@ -14,5 +14,10 @@
   "undef": true,
   "unused": true,
   "eqnull": true,
-  "esnext": true
+  "esnext": true,
+  "curly": true,
+  "globals": {
+    "Phaser": true,
+    "PIXI": true
+  }
 }

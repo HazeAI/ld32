@@ -6,7 +6,6 @@
     "bower": "^1.4.1",
     "browser-sync": "~2.5.2",
     "browserify": "~9.0.4",
-    "browserify-shim": "~3.8.5",
     "gulp": "~3.8.11",
     "gulp-babel": "~4.0.1",
     "gulp-jshint": "^1.10.0",
@@ -22,8 +21,5 @@
     "vinyl-buffer": "~1.0.0",
     "vinyl-source-stream": "~1.1.0",
     "watchify": "~3.1.0"
-  },
-  "browserify-shim": {
-    "phaser": "global:Phaser"
   }
 }
