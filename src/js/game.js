@@ -2,6 +2,7 @@
 
 'use strict';
 
+const Player = require('player');
 const {StraightForward, Spread, BackAndForth,
        Circle, randomize} = require('weapon');
 
@@ -24,22 +25,31 @@ class Game {
     this.rndWeapon();
   }
 
-  update() {
-      
+  update() {      
     this.player.position.x = this.input.position.x;
     this.player.position.y = this.input.position.y;
-      
     if (this.fireButton.isDown) { 
       this.player.weapon.fire(this.player);
     }
-      
   }
-    
-  rndWeapon() {
-   
+  
+  rndWeapon() {    
     this.player.weapon = randomize(this);
-      
   }
+
+  ////////////////////////////////////////////////////////////////////////
+  // Input
+
+  setupGamepad() {
+    // TODO
+  }
+
+  setupKeyboard() {
+    // TODO
+  }
+
+  // Input
+  ////////////////////////////////////////////////////////////////////////
 
 }
 
