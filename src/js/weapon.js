@@ -225,10 +225,10 @@ class BackAndForth extends Phaser.Group {
 var bulletClasses = [StraightForward,
                      Spread,
                      BackAndForth,
-                     Circle]
+                     Circle];
 
 var spriteNames = ['basic_bullet',
-                   'basic_bullet_2']
+                   'basic_bullet_2'];
 
 var options = [];
 //Big slow moving bullets
