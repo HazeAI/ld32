@@ -26,7 +26,7 @@ const PIXI = global.PIXI;
 or, using object destructuring (which, in my opinion, is slightly neater):
 
 ```
-const {Phaser, PIXI} = global;
+const { Phaser, PIXI } = global;
 ```
 
 All other modules, either those installed via `npm` or from our own
