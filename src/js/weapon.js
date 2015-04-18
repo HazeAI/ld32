@@ -234,19 +234,19 @@ var options = [];
 //Big slow moving bullets
 options.push({'fireRate':20,
               'spriteScale':5,
-              'bulletSpeed':300,
+              'bulletSpeed':600,
               'scaleSpeed':0,
               'bulletBankScale':3});
 //Growing bullets
 options.push({'fireRate':20,
               'spriteScale':1,
-              'bulletSpeed':600,
-              'scaleSpeed':3,
+              'bulletSpeed':900,
+              'scaleSpeed':10,
               'bulletBankScale':1});
 //High rate of fire
 options.push({'fireRate':40,
               'spriteScale':3,
-              'bulletSpeed':600,
+              'bulletSpeed':900,
               'scaleSpeed':0,
               'bulletBankScale':3});
 

@@ -15,26 +15,20 @@ class Game {
     const x = this.game.width / 2;
     const y = this.game.height / 2;
 
-    this.player = this.add.sprite(x, y, "player");
-    this.player.anchor.setTo(0.5, 0.5);
+    this.player = new Player(x, y, "player", this);
 
-    this.fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    let randomWeaponButton = this.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
-    randomWeaponButton.onDown.add(this.rndWeapon, this);
-    
     this.rndWeapon();
+
+    this.setupKeyboard();
+    this.setupGamepad();
   }
 
-  update() {      
-    this.player.position.x = this.input.position.x;
-    this.player.position.y = this.input.position.y;
-    if (this.fireButton.isDown) { 
-      this.player.weapon.fire(this.player);
-    }
+  update() {
+    this.player.update();
   }
   
-  rndWeapon() {    
-    this.player.weapon = randomize(this);
+  rndWeapon() {
+    this.player.setWeapon(randomize(this));
   }
 
   ////////////////////////////////////////////////////////////////////////
@@ -45,7 +39,14 @@ class Game {
   }
 
   setupKeyboard() {
-    // TODO
+    // TODO: arrow keys!
+    
+    let fire = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    fire.onDown.add(this.player.fire, this.player);
+    fire.onUp.add(this.player.ceaseFire, this.player);
+    
+    let next_weapon = this.input.keyboard.addKey(Phaser.Keyboard.TAB);
+    next_weapon.onDown.add(this.rndWeapon, this);
   }
 
   // Input
