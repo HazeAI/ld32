@@ -15,7 +15,7 @@ class Game {
     const y = this.game.height / 2;
 
     this.player = this.add.sprite(x, y, "player");
-    this.player.weapons = []
+    this.player.weapons = [];
     this.player.weapons.push(new StraightForward(this, 'basic_bullet'));
     this.player.weapons.push(new Spread(this, 'basic_bullet'));
     this.player.weapons.push(new BackAndForth(this, 'basic_bullet'));

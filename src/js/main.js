@@ -10,7 +10,7 @@ const Preloader = require('preloader');
 
 global.initGame = function () {
   console.debug('bootstrapping...');
-  const game = new Phaser.Game(640, 480, Phaser.AUTO, 'ld32-game');
+  const game = new Phaser.Game(1280, 720, Phaser.AUTO, 'ld32-game');
   game.state.add('boot', Boot);
   game.state.add('preloader', Preloader);
   game.state.add('menu', Menu);
