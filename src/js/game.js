@@ -3,8 +3,7 @@
 'use strict';
 
 const Player = require('player');
-const {StraightForward, Spread, BackAndForth,
-       Circle, randomize} = require('weapon');
+const {randomize} = require('weapon');
 
 class Game {
   constructor() {
@@ -15,7 +14,7 @@ class Game {
     const x = this.game.width / 2;
     const y = this.game.height / 2;
 
-    this.player = new Player(x, y, "player", this);
+    this.player = new Player(x, y, 'player', this);
 
     this.rndWeapon();
 
