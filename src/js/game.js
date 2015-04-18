@@ -2,7 +2,8 @@
 
 'use strict';
 
-const { StraightForward, Spread, BackAndForth } = require('weapon');
+const {StraightForward, Spread, BackAndForth,
+       Circle} = require('weapon');
 
 class Game {
   constructor() {
@@ -18,10 +19,14 @@ class Game {
     this.player.weapons.push(new StraightForward(this, 'basic_bullet'));
     this.player.weapons.push(new Spread(this, 'basic_bullet'));
     this.player.weapons.push(new BackAndForth(this, 'basic_bullet'));
+    this.player.weapons.push(new Circle(this, 'basic_bullet'));
     this.player.weaponIndex = 0;
     this.player.weapon = this.player.weapons[this.player.weaponIndex];
     this.player.anchor.setTo(0.5, 0.5);
-    this.input.onHold.add(this.onInputDown, this);
+
+    this.fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    let weaponChangeButton = this.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+    weaponChangeButton.onDown.add(this.nextWeapon, this);
   }
 
   update() {
@@ -29,23 +34,20 @@ class Game {
     this.player.position.x = this.input.position.x;
     this.player.position.y = this.input.position.y;
       
-    if (this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) { 
+    if (this.fireButton.isDown) { 
       this.player.weapon.fire(this.player);
-    }
-      
-    if (this.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
-      this.player.weaponIndex++;
-      if (this.player.weaponIndex >= this.player.weapons.length) {
-        this.player.weaponIndex = 0;
-      }
-      this.player.weapon = this.player.weapons[this.player.weaponIndex];
-      
     }
       
   }
 
-  onInputDown() {
-    this.player.weapon.fire(this.player);
+  nextWeapon() {
+
+    this.player.weaponIndex++;
+    if (this.player.weaponIndex >= this.player.weapons.length) {
+      this.player.weaponIndex = 0;
+    }
+      this.player.weapon = this.player.weapons[this.player.weaponIndex];
+
   }
 
 }
