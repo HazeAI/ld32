@@ -1,6 +1,9 @@
+/* global require, console */
+
+'use strict';
 
 var gutil = require('gulp-util');
-var eslint = require('gulp-eslint');
+var jshint = require('gulp-jshint');
 var babel = require('babelify');
 var browserify = require('browserify');
 var browserSync = require('browser-sync');
@@ -8,7 +11,6 @@ var buffer = require('vinyl-buffer');
 var gulp = require('gulp');
 var less = require('gulp-less');
 var minifyCss = require('gulp-minify-css');
-var path = require('path');
 var reload = browserSync.reload;
 var rimraf = require('rimraf');
 var runSequence = require('run-sequence');
@@ -20,15 +22,15 @@ var watchify = require('watchify');
 
 var paths = {
   assets: 'src/assets/**/*',
-  css:    'src/css/*.css',
-  html:   'src/*.html',
-  libs:   [
+  css: 'src/css/*.css',
+  html: 'src/*.html',
+  libs: [
     'bower_components/phaser-official/build/phaser.js',
     'bower_components/phaser-official/build/phaser.min.js',
     'bower_components/phaser-official/build/phaser.map'
   ],
-  js:     ['src/js/**/*.js'],
-  dist:   './dist/'
+  js: ['src/js/**/*.js'],
+  dist: './dist/'
 };
 
 
@@ -36,7 +38,7 @@ gulp.task('clean', function (callback) {
   rimraf(paths.dist, callback);
 });
 
-function compile(watch) {
+function compile(shouldWatch) {
   var bundler = watchify(
     browserify('./src/js/main.js', {
       debug: true,
@@ -63,7 +65,7 @@ function compile(watch) {
       .pipe(gulp.dest('./dist/js'));
   }
 
-  if (watch) {
+  if (shouldWatch) {
     bundler.on('update', function() {
       console.log('-> bundling...');
       rebundle().pipe(reload({stream: true}));
@@ -110,19 +112,15 @@ gulp.task('styles', function () {
 
 gulp.task('dev_lint', function() {
   return gulp.src(paths.js)
-    .pipe(eslint({
-      envs: ['es6']
-    }))
-    .pipe(eslint.format())
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('lint', function() {
   return gulp.src(paths.js)
-    .pipe(eslint({
-      envs: ['es6']
-    }))
-    .pipe(eslint.format())
-    .pipe(eslint.failOnError());
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'));
 });
 
 gulp.task('html', function() {
@@ -132,7 +130,7 @@ gulp.task('html', function() {
     .pipe(reload({stream: true}));
 });
 
-gulp.task('build', function (callback) {
+gulp.task('release', function (callback) {
   runSequence('clean', ['lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles'], callback);
 });
 
