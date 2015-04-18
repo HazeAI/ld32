@@ -42,7 +42,7 @@ Add features that need to be done, and mark your name if you are working on it.
 * Bullet Manager __(Kenny)__
 * Bullet collision
 * Player movement/control
-* Level loading/scrolling
+* Level loading/scrolling __(Owen)__
 * Something to define levels - bg layers and enemy distribution
 * Slot machine functionality for mixing and matching weapon bits, arrays of
   available weapon classes, available graphics, and third array could contain
