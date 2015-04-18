@@ -1,6 +1,6 @@
-/* global module */
-
 'use strict';
+
+const { Phaser, PIXI } = global;
 
 class Bullet extends Phaser.Sprite {
 
@@ -29,8 +29,11 @@ class Bullet extends Phaser.Sprite {
     this.reset(x, y);
     this.scale.set(this.spriteScale);
 
-    this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
-
+    this.game.physics.arcade.velocityFromAngle(
+      angle,
+      speed,
+      this.body.velocity);
+      
     this.angle = angle;
 
     this.body.gravity.set(gx, gy);

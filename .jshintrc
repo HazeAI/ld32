@@ -1,0 +1,23 @@
+{
+  "browser": true,
+  "browserify": true,
+  "node": true,
+  "camelcase": true,
+  "eqeqeq": true,
+  "indent": 2,
+  "latedef": true,
+  "maxlen": 80,
+  "newcap": true,
+  "quotmark": "single",
+  "strict": true,
+  "globalstrict": true,
+  "undef": true,
+  "unused": true,
+  "eqnull": true,
+  "esnext": true,
+  "curly": true,
+  "globals": {
+    "Phaser": true,
+    "PIXI": true
+  }
+}

@@ -1,4 +1,4 @@
-/* global module */
+/* global module, require */
 
 'use strict';
 
@@ -11,8 +11,8 @@ class Game {
   }
 
   create() {
-    var x = this.game.width / 2
-      , y = this.game.height / 2;
+    const x = this.game.width / 2;
+    const y = this.game.height / 2;
 
     this.player = this.add.sprite(x, y, "player");
     this.player.weapons = []
@@ -51,5 +51,6 @@ class Game {
   }
 
 }
+
 
 module.exports = Game;
