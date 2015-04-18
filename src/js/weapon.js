@@ -59,7 +59,8 @@ class Bullet extends Phaser.Sprite {
 class StraightForward extends Phaser.Group {
 
   constructor(game, spriteName, fireRate=100, spriteScale=5,
-              bulletSpeed=600, scaleSpeed=0) {
+              bulletSpeed=600, scaleSpeed=0,
+              bulletBankScale=1) {
 
     super(game, game.world, 'Straight Forward', 
           false, true, Phaser.Physics.ARCADE);
@@ -68,7 +69,7 @@ class StraightForward extends Phaser.Group {
     this.bulletSpeed = bulletSpeed;
     this.fireRate = fireRate;
 
-    for (var i = 0; i < 64; i++) {
+    for (var i = 0; i < 64*bulletBankScale; i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));
     }
 
@@ -92,7 +93,8 @@ class StraightForward extends Phaser.Group {
 class Circle extends Phaser.Group {
 
   constructor(game, spriteName, fireRate=350, spriteScale=1,
-              bulletSpeed=600, scaleSpeed=0, radius=50.0, numBullets=12.0) {
+              bulletSpeed=600, scaleSpeed=0, 
+              bulletBankScale=1, radius=50.0, numBullets=12.0) {
 
     super(game, game.world, 'Circle', 
           false, true, Phaser.Physics.ARCADE);
@@ -103,7 +105,7 @@ class Circle extends Phaser.Group {
     this.radius = radius;
     this.numBullets = numBullets;
 
-    for (var i = 0; i < 128; i++) {
+    for (var i = 0; i < (48*numBullets*bulletBankScale); i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));
     }
 
@@ -137,7 +139,8 @@ class Circle extends Phaser.Group {
 class Spread extends Phaser.Group {
  
   constructor(game, spriteName, fireRate=100, spriteScale=5,
-              bulletSpeed=600, scaleSpeed=0, spread=60, numBullets=5) {
+              bulletSpeed=600, scaleSpeed=0, 
+              bulletBankScale=1, spread=60, numBullets=5) {
 
     super(game, game.world, 'Spread',
           false, true, Phaser.Physics.ARCADE);
@@ -148,7 +151,7 @@ class Spread extends Phaser.Group {
     this.spread = spread;
     this.numBullets = numBullets;
 
-    for (var i = 0; i < (this.numBullets*48); i++) {
+    for (var i = 0; i < (this.numBullets*64*bulletBankScale); i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));  
     }
 
@@ -178,7 +181,8 @@ class Spread extends Phaser.Group {
 class BackAndForth extends Phaser.Group {
 
   constructor(game, spriteName, fireRate=20, spriteScale=5,
-              bulletSpeed=600, scaleSpeed=0) {
+              bulletSpeed=600, scaleSpeed=0, 
+              bulletBankScale=1) {
 
     super(game, game.world, 'BackAndForth',
           false, true, Phaser.Physics.ARCADE);
@@ -192,7 +196,7 @@ class BackAndForth extends Phaser.Group {
 
     this.patternIndex = 0;
 
-    for (var i = 0; i < 128; i++) {
+    for (var i = 0; i < 128*bulletBankScale; i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));  
     }
 
@@ -216,9 +220,49 @@ class BackAndForth extends Phaser.Group {
     this.nextFire = this.game.time.time + this.fireRate;
   }
 
+}
 
+var bulletClasses = [StraightForward,
+                     Spread,
+                     BackAndForth,
+                     Circle]
+
+var spriteNames = ['basic_bullet',
+                   'basic_bullet_2']
+
+var options = [];
+//Big slow moving bullets
+options.push({'fireRate':20,
+              'spriteScale':5,
+              'bulletSpeed':300,
+              'scaleSpeed':0,
+              'bulletBankScale':3});
+//Growing bullets
+options.push({'fireRate':20,
+              'spriteScale':1,
+              'bulletSpeed':600,
+              'scaleSpeed':3,
+              'bulletBankScale':1});
+//High rate of fire
+options.push({'fireRate':40,
+              'spriteScale':3,
+              'bulletSpeed':600,
+              'scaleSpeed':0,
+              'bulletBankScale':3});
+
+function randomize(game) {
+ 
+  var klass = bulletClasses[game.rnd.between(0, bulletClasses.length-1)];
+  var thisSprite = spriteNames[game.rnd.between(0, spriteNames.length-1)];
+  var thisOptions = options[game.rnd.between(0, options.length-1)];
+    
+  return new klass(game, thisSprite, thisOptions.fireRate,
+               thisOptions.spriteScale, thisOptions.bulletSpeed,
+               thisOptions.scaleSpeed,
+               thisOptions.bulletBankScale);
+    
 }
 
 module.exports = {StraightForward: StraightForward,
                   Spread: Spread, BackAndForth: BackAndForth,
-                  Circle: Circle};
+                  Circle: Circle, randomize: randomize};
