@@ -168,7 +168,9 @@ class Spread extends Phaser.Group {
       var startAngle = angle - this.spread/2 + bulletIncrement/2;
 
       for (var i = 0; i < this.numBullets; i++) {
-        this.getFirstExists(false).fire(x, y, startAngle+(bulletIncrement*i), this.bulletSpeed);
+        this.getFirstExists(false)
+          .fire(x, y, startAngle+(bulletIncrement*i),
+                this.bulletSpeed);
 
       }
 
@@ -192,7 +194,8 @@ class BackAndForth extends Phaser.Group {
     this.fireRate = fireRate;
 
     this.pattern = Phaser.ArrayUtils.numberArrayStep(-800, 800, 200);
-    this.pattern = this.pattern.concat(Phaser.ArrayUtils.numberArrayStep(800, -800, -200));
+    this.pattern = this.pattern.concat(
+        Phaser.ArrayUtils.numberArrayStep(800, -800, -200));
 
     this.patternIndex = 0;
 
@@ -225,10 +228,10 @@ class BackAndForth extends Phaser.Group {
 var bulletClasses = [StraightForward,
                      Spread,
                      BackAndForth,
-                     Circle]
+                     Circle];
 
 var spriteNames = ['basic_bullet',
-                   'basic_bullet_2']
+                   'basic_bullet_2'];
 
 var options = [];
 //Big slow moving bullets
@@ -252,11 +255,11 @@ options.push({'fireRate':40,
 
 function randomize(game) {
  
-  var klass = bulletClasses[game.rnd.between(0, bulletClasses.length-1)];
+  var Klass = bulletClasses[game.rnd.between(0, bulletClasses.length-1)];
   var thisSprite = spriteNames[game.rnd.between(0, spriteNames.length-1)];
   var thisOptions = options[game.rnd.between(0, options.length-1)];
     
-  return new klass(game, thisSprite, thisOptions.fireRate,
+  return new Klass(game, thisSprite, thisOptions.fireRate,
                thisOptions.spriteScale, thisOptions.bulletSpeed,
                thisOptions.scaleSpeed,
                thisOptions.bulletBankScale);
