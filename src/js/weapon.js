@@ -91,8 +91,8 @@ class StraightForward extends Phaser.Group {
 
 class Circle extends Phaser.Group {
 
-  constructor(game, spriteName, fireRate=350, spriteScale=3,
-              bulletSpeed=600, scaleSpeed=0, radius=50) {
+  constructor(game, spriteName, fireRate=350, spriteScale=1,
+              bulletSpeed=600, scaleSpeed=0, radius=50.0, numBullets=12.0) {
 
     super(game, game.world, 'Circle', 
           false, true, Phaser.Physics.ARCADE);
@@ -101,6 +101,7 @@ class Circle extends Phaser.Group {
     this.bulletSpeed = bulletSpeed;
     this.fireRate = fireRate;
     this.radius = radius;
+    this.numBullets = numBullets;
 
     for (var i = 0; i < 128; i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));
@@ -115,15 +116,18 @@ class Circle extends Phaser.Group {
     var x = source.x;
     var y = source.y;
 
-    this.getFirstExists(false).fire(x+this.radius, y, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x-this.radius, y, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x, y+this.radius, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x, y-this.radius, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x+this.radius, y, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x+this.radius*0.7, y+this.radius*0.7, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x-this.radius*0.7, y-this.radius*0.7, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x-this.radius*0.7, y+this.radius*0.7, angle, this.bulletSpeed);
-    this.getFirstExists(false).fire(x+this.radius*0.7, y-this.radius*0.7, angle, this.bulletSpeed);
+    //Convert degrees to radians
+    //cos and sin in javascript expect radians
+    var increment = (2.0*Math.PI)/this.numBullets;
+    console.log(increment);
+
+    for (var i = 0; i < this.numBullets; i++) {
+        var thisAngle = increment*i;
+        this.getFirstExists(false)
+          .fire(x+(this.radius*Math.cos(thisAngle)),
+                y+(this.radius*Math.sin(thisAngle)),
+                angle, this.bulletSpeed);
+    }
 
     this.nextFire = this.game.time.time + this.fireRate;
 
