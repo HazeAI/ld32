@@ -27,7 +27,6 @@ class Bullet extends Phaser.Sprite {
   fire(x, y, angle, speed, gx=0, gy=0) {
 
     this.reset(x, y);
-    console.log(this.spriteScale);
     this.scale.set(this.spriteScale);
       
     this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
@@ -56,7 +55,7 @@ class Bullet extends Phaser.Sprite {
 
 class StraightForward extends Phaser.Group {
     
-  constructor(game, spriteName, fireRate=100, spriteScale=1,
+  constructor(game, spriteName, fireRate=100, spriteScale=5,
               bulletSpeed=600, scaleSpeed=0) {
             
     super(game, game.world, 'Straight Forward', 
@@ -72,14 +71,14 @@ class StraightForward extends Phaser.Group {
       
   }
     
-  fire(source) {
+  fire(source, angle=0) {
       
     if (this.game.time.time < this.nextFire) { return; }
       
     var x = source.x + 10;
     var y = source.y + 10;
       
-    this.getFirstExists(false).fire(x, y, 0, this.bulletSpeed);
+    this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed);
     
     this.nextFire = this.game.time.time + this.fireRate;
       
@@ -87,4 +86,84 @@ class StraightForward extends Phaser.Group {
     
 }
 
-module.exports = {StraightForward: StraightForward};
+class Spread extends Phaser.Group {
+ 
+  constructor(game, spriteName, fireRate=100, spriteScale=5,
+              bulletSpeed=600, scaleSpeed=0) {
+      
+    super(game, game.world, 'Spread',
+          false, true, Phaser.Physics.ARCADE);
+      
+    this.nextFire = 0;
+    this.bulletSpeed = bulletSpeed;
+    this.fireRate = fireRate;
+    
+    for (var i = 0; i < 128; i++) {
+      this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));   
+    }
+      
+  }
+    
+  fire(source, angle=0) {
+   
+      if (this.game.time.time < this.nextFire) { return; }
+      
+      var x = source.x + 10;
+      var y = source.y + 10;
+      
+      this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed);
+      this.getFirstExists(false).fire(x, y, angle+15, this.bulletSpeed);
+      this.getFirstExists(false).fire(x, y, angle-15, this.bulletSpeed);
+      
+      this.nextFire = this.game.time.time + this.fireRate;
+      
+  }
+    
+}
+
+class BackAndForth extends Phaser.Group {
+ 
+  constructor(game, spriteName, fireRate=20, spriteScale=5,
+              bulletSpeed=600, scaleSpeed=0) {
+    
+    super(game, game.world, 'BackAndForth',
+          false, true, Phaser.Physics.ARCADE);
+    
+    this.nextFire = 0;
+    this.bulletSpeed = bulletSpeed;
+    this.fireRate = fireRate;
+
+    this.pattern = Phaser.ArrayUtils.numberArrayStep(-800, 800, 200);
+    this.pattern = this.pattern.concat(Phaser.ArrayUtils.numberArrayStep(800, -800, -200));
+                                       
+    this.patternIndex = 0;
+
+    for (var i = 0; i < 128; i++) {
+      this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));  
+    }
+
+  }
+
+  fire(source, angle=0) {
+    if (this.game.time.time < this.nextFire) { return; }
+      
+    var x = source.x + 10;
+    var y = source.y + 10;
+      
+    this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0,
+                                   this.pattern[this.patternIndex]);
+      
+    this.patternIndex++;
+      
+    if (this.patternIndex === this.pattern.length) {
+      this.patternIndex = 0;   
+    }
+      
+    this.nextFire = this.game.time.time + this.fireRate;
+  }
+
+    
+}
+
+module.exports = {StraightForward: StraightForward,
+                  Spread: Spread, BackAndForth: BackAndForth};

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const { StraightForward } = require('weapon');
+const { StraightForward, Spread, BackAndForth } = require('weapon');
 
 class Game {
   constructor() {
@@ -14,7 +14,7 @@ class Game {
       , y = this.game.height / 2;
 
     this.player = this.add.sprite(x, y, "player");
-    this.player.weapon = new StraightForward(this, 'basic_bullet');
+    this.player.weapon = new BackAndForth(this, 'basic_bullet');
     this.player.anchor.setTo(0.5, 0.5);
     this.input.onDown.add(this.onInputDown, this);
   }
