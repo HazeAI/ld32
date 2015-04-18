@@ -1,10 +1,10 @@
-/* global module */
-
 'use strict';
+
+const { Phaser } = global;
 
 class Boot {
   preload() {
-    this.load.image("preloader", "assets/preloader.gif");
+    this.load.image('preloader', 'assets/preloader.gif');
   }
 
   create() {
@@ -22,8 +22,9 @@ class Boot {
       this.game.scale.pageAlignHorizontally = true;
       this.game.scale.setScreenSize(true);
     }
-    this.game.state.start("preloader");
+    this.game.state.start('preloader');
   }
 }
+
 
 module.exports = Boot;

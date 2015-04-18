@@ -1,5 +1,3 @@
-/* global require, console */
-
 'use strict';
 
 var gutil = require('gulp-util');
@@ -16,7 +14,6 @@ var rimraf = require('rimraf');
 var runSequence = require('run-sequence');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
 var minifyhtml = require('gulp-minify-html');
 var watchify = require('watchify');
 

@@ -1,6 +1,6 @@
-/* global module */
-
 'use strict';
+
+const { Phaser, PIXI } = global;
 
 class Bullet extends Phaser.Sprite {
     
@@ -30,7 +30,10 @@ class Bullet extends Phaser.Sprite {
     console.log(this.spriteScale);
     this.scale.set(this.spriteScale);
       
-    this.game.physics.arcade.velocityFromAngle(angle, speed, this.body.velocity);
+    this.game.physics.arcade.velocityFromAngle(
+      angle,
+      speed,
+      this.body.velocity);
       
     this.angle = angle;
       
@@ -87,4 +90,4 @@ class StraightForward extends Phaser.Group {
     
 }
 
-module.exports = {StraightForward: StraightForward};
+module.exports = {StraightForward};
