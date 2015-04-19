@@ -61,7 +61,10 @@ class Bullet extends Phaser.Sprite {
       this.scale.x += this.scaleSpeed;
       this.scale.y += this.scaleSpeed;
     }
-
+      
+    if (this.game.isOnCamera(this) == false) {
+      this.kill();   
+    }
   }
 
 }
