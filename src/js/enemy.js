@@ -6,8 +6,8 @@
  - Sine wave
  */
 
-const {Phaser} = global;
-const {randomize} = require('weapon');
+const { Phaser } = global;
+const { randomize } = require('weapon');
 
 class Enemy extends Phaser.Sprite {
   constructor(spriteName, game) {
@@ -53,7 +53,7 @@ class Enemy extends Phaser.Sprite {
   
   update() {
     if (this.exists) {
-      if (this.game.isOnCamera(this) == false) {
+      if (this.game.isOnCamera(this) === false) {
         this.kill();   
       }
     }
@@ -79,7 +79,7 @@ class RangedDrone extends Drone{
   update() {
     if (this.exists) {
       super.update();
-      if (this.trackPlayer == true){
+      if (this.trackPlayer === true){
         var xDiff = this.game.player.getPosX() - this.getPosX();
         var yDiff = this.game.player.getPosY() - this.getPosY(); 
         var angle =  Math.atan2(yDiff, xDiff)*(180 / Math.PI);
@@ -123,7 +123,7 @@ class RangedChaser extends Chaser {
   update() {
     if (this.exists) {
       super.update();
-      if (this.trackPlayer == true) {
+      if (this.trackPlayer === true) {
         var xDiff = this.game.player.getPosX() - this.getPosX();
         var yDiff = this.game.player.getPosY() - this.getPosY(); 
         var angle =  Math.atan2(yDiff, xDiff)*(180 / Math.PI);
@@ -135,5 +135,9 @@ class RangedChaser extends Chaser {
   }
 }
 
-module.exports = {Chaser, RangedChaser,
-                  Drone, RangedDrone};
+module.exports = {
+  Chaser,
+  RangedChaser,
+  Drone,
+  RangedDrone
+};
