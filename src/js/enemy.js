@@ -1,10 +1,10 @@
 'use strict';
 
 /*
-TODO: Add more enemy types
-      - With gravity
-      - Sine wave
-*/
+ TODO: Add more enemy types
+ - With gravity
+ - Sine wave
+ */
 
 const {Phaser} = global;
 const {randomize} = require('weapon');
@@ -12,7 +12,7 @@ const {randomize} = require('weapon');
 class Enemy extends Phaser.Sprite {
   constructor(spriteName, game) {
     super(game, 0, 0, spriteName);
-      
+    
     this.anchor.setTo(0.5, 0.5);
     this.scale.x = 0.25;
     this.scale.y = 0.25;
@@ -20,39 +20,39 @@ class Enemy extends Phaser.Sprite {
     this.outOfBoundsKill = true;
     this.exists = false;
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
-      
+    
     this.weapon = null;
-      
+    
     this.speed = 5;
-      
+    
     this.should_fire = false;
   }
-    
+  
   getPosX() {
     return this.position.x;   
   }
-    
+  
   getPosY() {
     return this.position.y;   
   }
-    
+  
   warpTo(x, y) {
     this.position.x = x;
     this.position.y = y;
   }
-    
+  
   moveX(factor) {
     this.position.x += (factor * this.speed);   
   }
-    
+  
   moveY(factor) {
     this.position.y += (factor * this.speed);   
   }
-    
+  
   setWeapon(weapon) {
     this.weapon = weapon; 
   }
-    
+  
   update() {
     if (this.exists) {
       if (this.game.isOnCamera(this) == false) {
@@ -77,7 +77,7 @@ class RangedDrone extends Drone{
     this.setWeapon(randomize(game));
     this.trackPlayer = trackPlayer;
   }
-    
+  
   update() {
     if (this.exists) {
       super.update();
@@ -114,14 +114,14 @@ class Chaser extends Enemy{
     }
   }
 }
-    
+
 class RangedChaser extends Chaser {
   constructor(spriteName, game, trackPlayer=false) {
     super(spriteName, game);
     this.setWeapon(randomize(game));
     this.trackPlayer = trackPlayer;
   }
-    
+  
   update() {
     if (this.exists) {
       super.update();

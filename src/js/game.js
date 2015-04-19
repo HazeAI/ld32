@@ -17,6 +17,7 @@ const {
 } = require('enemy');
 const { randomize } = require('weapon');
 
+
 class Game {
   constructor() {
     this.player = null;
@@ -26,8 +27,10 @@ class Game {
     const x = this.game.width / 2;
     const y = this.game.height / 2;
     
-    this.game.world.setBounds(0, 0, 
-                              this.game.width, this.game.height);
+    this.game.world.setBounds(0, 0, this.game.width, this.game.height);
+
+    this.root = this.add.group();
+    this.root.fixedToCamera = true;
 
     this.map = this.game.add.tilemap('garbage');
     this.map.addTilesetImage('tiles', 'gameTiles');
@@ -49,15 +52,20 @@ class Game {
   update() {
     // FIXME: what is this '9' mean?
     this.camera.x += (this.time.elapsedMS / 9);
+    
     this.player.update();
+
     this.enemy.update();
     this.otherEnemy.update();
+    
     this.physics.arcade.overlap(this.player.weapon, this.enemy, this.enemyHit, null, this);
     this.physics.arcade.overlap(this.player.weapon, this.otherEnemy, this.enemyHit, null, this);
+
     if (this.enemy.exists == false) {
       this.enemy.reset(this.game.width+this.game.camera.x,
                        this.game.rnd.between(0, this.game.height));   
     }
+
     if (this.otherEnemy.exists == false) {
       this.otherEnemy.reset(this.game.width+this.game.camera.x,
                       this.game.rnd.between(0, this.game.height));

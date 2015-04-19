@@ -10,7 +10,6 @@ class Player {
     this.vis.anchor.setTo(0.5, 0.5);
     this.vis.scale.x = 0.25;
     this.vis.scale.y = 0.25;
-    this.vis.fixedToCamera = true;
     this.game.physics.arcade.enable(this.vis);
     this.vis.body.collideWorldBounds = true;
     
@@ -19,10 +18,12 @@ class Player {
     this.movement_direction = new Phaser.Point();
     this.movement_direction.x = 0.0;
     this.movement_direction.y = 0.0;
-    this.movement_speed = 1.0;
+    this.movement_speed = 5.0;
 
     this.setupKeyboard();
     this.setupGamepad();
+
+    this.game.root.add(this.vis);
   }
 
   getPosition() {
@@ -70,12 +71,10 @@ class Player {
     // update movement vector
     this.movement_direction.x = (horizontal_movement * this.movement_speed);
     this.movement_direction.y = (vertical_movement * this.movement_speed);
-    console.debug(this.movement_direction);
 
     // Update sprite position
     this.vis.position.x = this.vis.position.x + this.movement_direction.x;
     this.vis.position.y = this.vis.position.y + this.movement_direction.y;
-    console.debug(this.vis.position);
 
     // firearm discharge
     if (this.fire_key.isDown) {
@@ -92,8 +91,8 @@ class Player {
 
   setupKeyboard() {
     this.up_key    = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
-    this.down_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    this.left_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    this.down_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    this.left_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     this.right_key = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     this.fire_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
   }
