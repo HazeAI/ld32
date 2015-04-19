@@ -22,6 +22,7 @@ class Game {
   constructor() {
     this.player = null;
     this.scoreText = null;
+    this.lifeText = null;
   }
 
   create() {
@@ -35,9 +36,6 @@ class Game {
     this.backgroundlayer = this.map.createLayer('testLayer');
     this.backgroundlayer.resizeWorld();
       
-    this.scoreText = this.add.bitmapText(this.game.width/2, 10, 'minecraftia', 'SCORE: 0');
-    this.scoreText.fixedToCamera = true;
-      
     this.enemies = new Phaser.Group(this.game, this.game.world,
                                     'Enemies', false, true,
                                     Phaser.Physics.ARCADE);
@@ -49,6 +47,11 @@ class Game {
     this.root.fixedToCamera = true;
 
     this.player = new Player(x, y, 'player', this);
+      
+    this.scoreText = this.add.bitmapText(10, 10, 'minecraftia', 'SCORE: '+this.player.score);
+    this.scoreText.fixedToCamera = true;
+    this.lifeText = this.add.bitmapText(10, 45, 'minecraftia', 'LIVES: '+this.player.lives);
+    this.lifeText.fixedToCamera = true;
 
     //////////////////////////////////////////////////
     
@@ -65,6 +68,7 @@ class Game {
     this.player.update();
     this.enemies.update();
     this.physics.arcade.overlap(this.player.weapon, this.enemies, this.enemyHit, null, this);
+    this.physics.arcade.overlap(this.player, this.enemies, this.playerHit, null, this);
       
     this.enemies.forEach(function(enemy){
       if (enemy.exists == false) {
@@ -73,15 +77,29 @@ class Game {
       }
     }, this);
       
+    if (this.player.lives <= 0) {
+      console.log('GAME OVER');   
+    }
+      
     this.scoreText.text = 'SCORE: '+this.player.score;
+    this.lifeText.text = 'LIVES: '+this.player.lives;
 
   }
     
   enemyHit(bullet, enemy){
-    console.log('hit');
     bullet.kill();
     enemy.kill();
     this.player.score += 1;
+  }
+    
+  playerHit(player, enemy){
+    enemy.kill();
+    player.kill();
+    if (this.player.lives > 0){
+        player.reset(this.game.width/2,
+                     this.game.height/2);
+        this.player.lives = this.player.lives -1;
+    }
   }
   
   rndWeapon() {

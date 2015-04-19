@@ -18,6 +18,7 @@ class Player extends Phaser.Group {
     this.add(this.vis);
       
     this.score = 0;
+    this.lives = 3;
     
     this.weapon = null;
 

@@ -82,7 +82,7 @@ class StraightForward extends Phaser.Group {
     this.bulletSpeed = bulletSpeed;
     this.fireRate = fireRate;
 
-    for (var i = 0; i < 24*bulletBankScale; i++) {
+    for (var i = 0; i < 64*bulletBankScale; i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));
     }
 
@@ -118,7 +118,7 @@ class Circle extends Phaser.Group {
     this.radius = radius;
     this.numBullets = numBullets;
 
-    for (var i = 0; i < (24*numBullets*bulletBankScale); i++) {
+    for (var i = 0; i < (48*numBullets*bulletBankScale); i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));
     }
 
