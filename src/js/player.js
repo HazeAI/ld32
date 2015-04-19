@@ -2,8 +2,10 @@
 
 const { Phaser } = global;
 
-class Player {
+class Player extends Phaser.Group {
   constructor(x, y, sprite_name, game) {
+    super(game);
+    
     this.game = game;
     
     this.vis = this.game.add.sprite(x, y, sprite_name);
@@ -12,6 +14,8 @@ class Player {
     this.vis.scale.y = 0.25;
     this.game.physics.arcade.enable(this.vis);
     this.vis.body.collideWorldBounds = true;
+
+    this.add(this.vis);
       
     this.score = 0;
     
@@ -25,7 +29,7 @@ class Player {
     this.setupKeyboard();
     this.setupGamepad();
 
-    this.game.root.add(this.vis);
+    this.game.root.add(this);
   }
 
   getPosition() {
@@ -48,7 +52,11 @@ class Player {
   }
 
   setWeapon(weapon) {
+    if (this.weapon) {
+      this.remove(this.weapon);
+    }
     this.weapon = weapon;
+    this.add(weapon);
   }
 
   update() {

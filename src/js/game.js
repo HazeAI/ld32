@@ -30,17 +30,12 @@ class Game {
     
     this.game.world.setBounds(0, 0, this.game.width, this.game.height);
 
-    this.root = this.add.group();
-    this.root.fixedToCamera = true;
-
     this.map = this.game.add.tilemap('garbage');
     this.map.addTilesetImage('tiles', 'gameTiles');
     this.backgroundlayer = this.map.createLayer('testLayer');
     this.backgroundlayer.resizeWorld();
-
-    this.player = new Player(x, y, 'player', this);
       
-    this.scoreText = this.add.bitmapText(this.game.width/2, 10, 'minecraftia', 'SCORE: '+this.player.score);
+    this.scoreText = this.add.bitmapText(this.game.width/2, 10, 'minecraftia', 'SCORE: 0');
     this.scoreText.fixedToCamera = true;
       
     this.enemies = new Phaser.Group(this.game, this.game.world,
@@ -50,6 +45,13 @@ class Game {
       this.enemies.add(new RangedDrone('melee_enemy', this));   
     }
 
+    this.root = this.add.group();
+    this.root.fixedToCamera = true;
+
+    this.player = new Player(x, y, 'player', this);
+
+    //////////////////////////////////////////////////
+    
     this.rndWeapon();
 
     this.setupKeyboard();
