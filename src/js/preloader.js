@@ -21,6 +21,7 @@ class Preloader {
     this.load.image('player', 'assets/player.png');
     this.load.image('basic_bullet', 'assets/basic_bullet.png');
     this.load.image('basic_bullet_2', 'assets/basic_bullet_2.png');
+    this.load.image('melee_enemy', 'assets/melee_enemy.png');
     this.load.bitmapFont(
       'minecraftia',
       'assets/minecraftia.png',
