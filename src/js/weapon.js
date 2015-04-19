@@ -1,5 +1,14 @@
 'use strict';
 
+/*
+TODO: Refactor - make Weapon base class
+TODO: Mechanism to make bullet type a dict rather
+      than just sprite name. Includes sprite, tracking 
+      option, and new free rotation option.
+      Pass all three options through weapon to bullet
+TODO: Lob bullet pattern
+*/
+
 const { Phaser, PIXI } = global;
 
 class Bullet extends Phaser.Sprite {

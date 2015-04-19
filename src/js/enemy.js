@@ -1,5 +1,11 @@
 'use strict';
 
+/*
+TODO: Add more enemy types
+      - With gravity
+      - Sine wave
+*/
+
 const {Phaser} = global;
 const {randomize} = require('weapon');
 

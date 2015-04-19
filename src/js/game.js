@@ -2,6 +2,12 @@
 
 'use strict';
 
+/*
+TODO: Collision
+TODO: Enemies Group
+TODO: Implement Score, Lives, Health
+*/
+
 const Player = require('player');
 const {Drone, RangedDrone,
        Chaser, RangedChaser} = require('enemy');

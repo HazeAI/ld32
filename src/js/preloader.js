@@ -1,5 +1,9 @@
 'use strict';
 
+/*
+TODO: Replace preloader, player, and minecraftia assets
+*/
+
 class Preloader {
 
   constructor() {
