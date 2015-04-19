@@ -16,6 +16,7 @@
   "eqnull": true,
   "esnext": true,
   "curly": true,
+  "varstmt": false,
   "globals": {
     "Phaser": true,
     "PIXI": true
