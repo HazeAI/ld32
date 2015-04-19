@@ -1,6 +1,6 @@
 'use strict';
 
-const {Phaser} = global;
+const { Phaser } = global;
 
 class Player {
   constructor(x, y, sprite_name, game) {
@@ -56,9 +56,13 @@ class Player {
   }
 
   update() {
+    console.debug('player update');
     // TODO: rather than move instantly, have the move functions update state that
     //       then get applied here when the update function is called from the game.
-    this.vis.position.x = this.game.input.position.x;
+
+    // FIXME: Probably want to update the movement of the player to use fixedToCamera
+    // http://phaser.io/docs/2.3.0/Phaser.Sprite.html#fixedToCamera
+    this.vis.position.x = this.game.input.position.x + this.vis.deltaX;
     this.vis.position.y = this.game.input.position.y;
 
     if (this.should_fire) {

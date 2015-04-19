@@ -42,7 +42,7 @@ class Game {
   }
 
   update() {
-    this.camera.x =  this.camera.x + (this.time.elapsedMS / 9);
+    this.camera.x += (this.time.elapsedMS / 9);
     this.player.update();
     this.enemy.update();
     this.otherEnemy.update();
