@@ -23,9 +23,20 @@ class Preloader {
   }
   loadResources() {
     this.load.image('player', 'assets/player.png');
+    this.load.image('melee_enemy', 'assets/melee_enemy.png');
+      
     this.load.image('basic_bullet', 'assets/basic_bullet.png');
     this.load.image('basic_bullet_2', 'assets/basic_bullet_2.png');
-    this.load.image('melee_enemy', 'assets/melee_enemy.png');
+    this.load.image('house', 'assets/house.png');
+    this.load.image('monster', 'assets/avery_monster.png');
+    this.load.image('super', 'assets/super.png');
+    this.load.image('eyeball', 'assets/eyeball.png');
+    this.load.image('shroom', 'assets/shroom.png');
+    this.load.image('glasses', 'assets/silly_glasses.png');
+    this.load.image('pie', 'assets/pie.png');
+    this.load.image('fireball', 'assets/fire_ball.png');
+    this.load.image('balloon', 'assets/balloon.png');
+      
     this.load.bitmapFont(
       'minecraftia',
       'assets/minecraftia.png',
