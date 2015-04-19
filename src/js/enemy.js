@@ -17,6 +17,7 @@ class Enemy {
     this.vis.anchor.setTo(0.5, 0.5);
     this.vis.scale.x = 0.25;
     this.vis.scale.y = 0.25;
+    this.game.physics.enable(this.vis, Phaser.Physics.ARCADE);
       
     this.weapon = null;
       

@@ -46,6 +46,14 @@ class Game {
     this.player.update();
     this.enemy.update();
     this.otherEnemy.update();
+    this.physics.arcade.overlap(this.player.weapon, this.enemy.vis, this.enemyHit, null, this);
+    this.physics.arcade.overlap(this.player.weapon, this.otherEnemy.vis, this.enemyHit, null, this);
+  }
+    
+  enemyHit(bullet, enemy){
+    console.log('hit');
+    bullet.kill();
+    enemy.kill();
   }
   
   rndWeapon() {
