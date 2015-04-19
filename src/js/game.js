@@ -63,9 +63,10 @@ class Game {
 
   update() {
     const dpad_rando_wep = 2;
-    
-    // FIXME: what is this '9' mean?
-    this.camera.x += (this.time.elapsedMS / 9);
+
+    // value to adjust the delta by for the background scroll speed.
+    const scrollScaleFactor = 0.1;
+    this.camera.x += (this.time.elapsedMS * scrollScaleFactor);
     
     this.player.update();
     this.enemies.update();
@@ -73,7 +74,7 @@ class Game {
     this.physics.arcade.overlap(this.player, this.enemies, this.playerHit, null, this);
       
     this.enemies.forEach(function(enemy){
-      if (enemy.exists == false) {
+      if (enemy.exists === false) {
         enemy.reset(this.game.width+this.game.camera.x,
                    this.game.rnd.between(0, this.game.height));
       }
