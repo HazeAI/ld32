@@ -3,7 +3,8 @@
 'use strict';
 
 const Player = require('player');
-const MeleeChaser = require('enemy');
+const {Drone, RangedDrone,
+       Chaser, RangedChaser} = require('enemy');
 const {randomize} = require('weapon');
 
 class Game {
@@ -16,7 +17,8 @@ class Game {
     const y = this.game.height / 2;
 
     this.player = new Player(x, y, 'player', this);
-    this.enemy = new MeleeChaser(x, y, 'melee_enemy', this);
+    this.enemy = new Drone(this.game.width, y, 'melee_enemy', this);
+    this.otherEnemy = new RangedDrone(this.game.width, y, 'melee_enemy', this);
 
     this.rndWeapon();
 
@@ -27,6 +29,7 @@ class Game {
   update() {
     this.player.update();
     this.enemy.update();
+    this.otherEnemy.update();
   }
   
   rndWeapon() {
