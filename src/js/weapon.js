@@ -237,45 +237,47 @@ class BackAndForth extends Phaser.Group {
 
 }
 
-var bulletClasses = [StraightForward,
-                     Spread,
-                     BackAndForth,
-                     Circle];
+const bulletClasses = [StraightForward,
+                       Spread,
+                       BackAndForth,
+                       Circle];
 
-var spriteNames = ['basic_bullet',
-                   'basic_bullet_2'];
+const spriteNames = ['basic_bullet',
+                     'basic_bullet_2'];
 
-var options = [];
-//Big slow moving bullets
-options.push({'fireRate':20,
-              'spriteScale':5,
-              'bulletSpeed':600,
-              'scaleSpeed':0,
-              'bulletBankScale':3});
-//Growing bullets
-options.push({'fireRate':20,
-              'spriteScale':1,
-              'bulletSpeed':900,
-              'scaleSpeed':10,
-              'bulletBankScale':1});
-//High rate of fire
-options.push({'fireRate':40,
-              'spriteScale':3,
-              'bulletSpeed':900,
-              'scaleSpeed':0,
-              'bulletBankScale':3});
+//var options = [];
+const options = [
+  //Big slow moving bullets
+  {'fireRate':20,
+   'spriteScale':5,
+   'bulletSpeed':600,
+   'scaleSpeed':0,
+   'bulletBankScale':3},
+  
+  //Growing bullets
+  {'fireRate':20,
+   'spriteScale':1,
+   'bulletSpeed':900,
+   'scaleSpeed':10,
+   'bulletBankScale':1},
+  
+  //High rate of fire
+  {'fireRate':40,
+   'spriteScale':3,
+   'bulletSpeed':900,
+   'scaleSpeed':0,
+   'bulletBankScale':3}
+];
 
 function randomize(game) {
- 
-  var Klass = bulletClasses[game.rnd.between(0, bulletClasses.length-1)];
-  var thisSprite = spriteNames[game.rnd.between(0, spriteNames.length-1)];
-  var thisOptions = options[game.rnd.between(0, options.length-1)];
-    
+  let Klass = bulletClasses[game.rnd.between(0, bulletClasses.length-1)];
+  let thisSprite = spriteNames[game.rnd.between(0, spriteNames.length-1)];
+  let thisOptions = options[game.rnd.between(0, options.length-1)];
+  
   return new Klass(game, thisSprite, thisOptions.fireRate,
-               thisOptions.spriteScale, thisOptions.bulletSpeed,
-               thisOptions.scaleSpeed,
-               thisOptions.bulletBankScale);
-    
+                   thisOptions.spriteScale, thisOptions.bulletSpeed,
+                   thisOptions.scaleSpeed,
+                   thisOptions.bulletBankScale);
 }
 
 module.exports = {StraightForward: StraightForward,
