@@ -80,6 +80,7 @@ gulp.task('js', compile);
 gulp.task('copy-assets', function () {
   gulp.src(paths.assets)
     .pipe(gulp.dest(paths.dist + 'assets'))
+    .pipe(reload({stream: true}))
     .on('error', gutil.log);
 });
 
@@ -127,11 +128,15 @@ gulp.task('html', function() {
 });
 
 gulp.task('release', function (callback) {
-  runSequence('clean', ['lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles'], callback);
+  runSequence('clean',
+    ['lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles'],
+    callback);
 });
 
 gulp.task('build', function (callback) {
-  runSequence('clean', ['dev_lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles'], callback);
+  runSequence('clean',
+    ['dev_lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles'],
+    callback);
 });
 
 gulp.task('browser-sync', function() {
@@ -140,6 +145,7 @@ gulp.task('browser-sync', function() {
   });
   gulp.watch('src/styles/**/*.less', ['styles']);
   gulp.watch('src/*.html', ['html']);
+  gulp.watch(paths.assets, ['copy-assets']);
   return watch();
 });
 
