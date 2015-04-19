@@ -27,6 +27,7 @@ class Bullet extends Phaser.Sprite {
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
     this.exists = false;
+    this.game.physics.enable(this, Phaser.Physics.ARCADE);
 
     this.tracking = false;
     this.scaleSpeed = 0;
@@ -60,7 +61,10 @@ class Bullet extends Phaser.Sprite {
       this.scale.x += this.scaleSpeed;
       this.scale.y += this.scaleSpeed;
     }
-
+      
+    if (this.game.isOnCamera(this) == false) {
+      this.kill();   
+    }
   }
 
 }
@@ -130,7 +134,6 @@ class Circle extends Phaser.Group {
     //Convert degrees to radians
     //cos and sin in javascript expect radians
     var increment = (2.0*Math.PI)/this.numBullets;
-    //console.log(increment);
 
     for (var i = 0; i < this.numBullets; i++) {
         var thisAngle = increment*i;
