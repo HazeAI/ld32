@@ -43,7 +43,7 @@ Add features that need to be done, and mark your name if you are working on it.
 * Bullet collision
 * Player movement/control
 * Level loading/scrolling __(Owen)__
-* Something to define levels - bg layers and enemy distribution (_Tiled?_)
+* Something to define levels - bg layers and enemy distribution __(Owen)__
 * Slot machine functionality for mixing and matching weapon bits, arrays of
   available weapon classes, available graphics, and third array could contain
   dicts of the other options that all Weapons share. Extra fast or high rate

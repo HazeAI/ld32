@@ -128,19 +128,21 @@ class Circle extends Phaser.Group {
 
     if (this.game.time.time < this.nextFire) { return; }
 
-    var x = source.x;
-    var y = source.y;
+    const { x, y } = source;
 
-    //Convert degrees to radians
-    //cos and sin in javascript expect radians
-    var increment = (2.0*Math.PI)/this.numBullets;
+    // Convert degrees to radians
+    // cos and sin in javascript expect radians
+    var increment = (2.0 * Math.PI) / this.numBullets;
 
-    for (var i = 0; i < this.numBullets; i++) {
-        var thisAngle = increment*i;
-        this.getFirstExists(false)
-          .fire(x+(this.radius*Math.cos(thisAngle)),
-                y+(this.radius*Math.sin(thisAngle)),
-                angle, this.bulletSpeed);
+    for (let i = 0; i < this.numBullets; i++) {
+      const thisAngle = increment * i;
+      try {
+        this.getFirstExists(false).fire(x+(this.radius*Math.cos(thisAngle)),
+          y + (this.radius*Math.sin(thisAngle)),
+          angle, this.bulletSpeed);
+      } catch (err) {
+        console.error(err.message);
+      }
     }
 
     this.nextFire = this.game.time.time + this.fireRate;

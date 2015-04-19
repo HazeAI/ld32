@@ -8,6 +8,7 @@ class Boot {
   }
 
   create() {
+    this.game.input.gamepad.start();
     this.game.input.maxPointers = 1;
     this.game.scale.pageAlignHorizontally = true;
     this.game.scale.pageAlignVertically = true;
