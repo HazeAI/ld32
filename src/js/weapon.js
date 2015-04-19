@@ -29,7 +29,7 @@ class Bullet extends Phaser.Sprite {
     this.exists = false;
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
 
-    this.tracking = false;
+    this.tracking = true;
     this.scaleSpeed = 0;
 
   }
@@ -243,13 +243,22 @@ const bulletClasses = [StraightForward,
                        Circle];
 
 const spriteNames = ['basic_bullet',
-                     'basic_bullet_2'];
+                     'basic_bullet_2',
+                     'super',
+                     'eyeball',
+                     'shroom',
+                     'glasses',
+                     'pie',
+                     'fireball',
+                     'balloon',
+                     'house',
+                     'monster'];
 
 //var options = [];
 const options = [
   //Big slow moving bullets
   {'fireRate':150,
-   'spriteScale':5,
+   'spriteScale':2,
    'bulletSpeed':600,
    'scaleSpeed':0,
    'bulletBankScale':3},
@@ -263,7 +272,7 @@ const options = [
   
   //High rate of fire
   {'fireRate':300,
-   'spriteScale':3,
+   'spriteScale':0.5,
    'bulletSpeed':900,
    'scaleSpeed':0,
    'bulletBankScale':3}
