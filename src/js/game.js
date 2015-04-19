@@ -59,6 +59,8 @@ class Game {
   }
 
   update() {
+    const dpad_rando_wep = 2;
+    
     // FIXME: what is this '9' mean?
     this.camera.x += (this.time.elapsedMS / 9);
     
@@ -75,6 +77,9 @@ class Game {
       
     this.scoreText.text = 'SCORE: '+this.player.score;
 
+    if (this.pad.justPressed(dpad_rando_wep)) {
+      this.rndWeapon();
+    }
   }
     
   enemyHit(bullet, enemy){
@@ -100,7 +105,7 @@ class Game {
   // Input
 
   setupGamepad() {
-    // TODO
+    this.pad = this.input.gamepad.pad1;
   }
 
   setupKeyboard() {

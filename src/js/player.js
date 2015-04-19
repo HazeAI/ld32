@@ -60,21 +60,28 @@ class Player extends Phaser.Group {
   }
 
   update() {
+    const dpad_up = 12;
+    const dpad_down = 13;
+    const dpad_left = 14;
+    const dpad_right = 15;
+    const dpad_fire = 0;
+    const dpad_pause = 9;
+    
     // vertical motion
-    let vertical_movement = 0.0;
-    if(this.up_key.isDown) {
+    let vertical_movement = this.pad.axis(1);
+    if(this.up_key.isDown || this.pad.isDown(dpad_up)) {
       vertical_movement += -1.0;
     }
-    if (this.down_key.isDown) {
+    if (this.down_key.isDown || this.pad.isDown(dpad_down)) {
       vertical_movement +=  1.0;
     }
 
     // horizontal motion
-    let horizontal_movement = 0.0;
-    if (this.left_key.isDown) {
+    let horizontal_movement = this.pad.axis(0);
+    if (this.left_key.isDown || this.pad.isDown(dpad_left)) {
       horizontal_movement += -1.0;
     }
-    if (this.right_key.isDown) {
+    if (this.right_key.isDown || this.pad.isDown(dpad_right)) {
       horizontal_movement +=  1.0;
     }
 
@@ -87,7 +94,7 @@ class Player extends Phaser.Group {
     this.vis.position.y = this.vis.position.y + this.movement_direction.y;
 
     // firearm discharge
-    if (this.fire_key.isDown) {
+    if (this.fire_key.isDown || this.pad.isDown(dpad_fire)) {
       this.fire();
     }
   }
@@ -96,7 +103,7 @@ class Player extends Phaser.Group {
   // Input
 
   setupGamepad() {
-    // TODO
+    this.pad = this.game.input.gamepad.pad1;
   }
 
   setupKeyboard() {

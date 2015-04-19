@@ -1,5 +1,7 @@
 'use strict';
 
+const {Phaser} = global;
+
 class Menu {
 
   constructor() {
@@ -22,13 +24,14 @@ class Menu {
     this.startTxt.align = 'center';
     this.startTxt.x = this.game.width / 2 - this.startTxt.textWidth / 2;
 
-    this.input.onDown.add(this.onDown, this);
+    this.start_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    this.pad = this.game.input.gamepad.pad1;
   }
 
-  update() {}
-
-  onDown() {
-    this.game.state.start('game');
+  update() {
+    if (this.start_key.isDown || this.pad.isDown(9) || this.pad.isDown(0)) {
+      this.game.state.start('game');
+    }
   }
 }
 
