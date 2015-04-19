@@ -16,6 +16,11 @@ class Game {
     const x = this.game.width / 2;
     const y = this.game.height / 2;
 
+    this.map = this.game.add.tilemap('garbage');
+    this.map.addTilesetImage('tiles', 'gameTiles');
+    this.backgroundlayer = this.map.createLayer('testLayer');
+    this.backgroundlayer.resizeWorld();
+
     this.player = new Player(x, y, 'player', this);
     this.enemy = new Drone(this.game.width, y, 'melee_enemy', this);
     this.otherEnemy = new RangedDrone(this.game.width, y, 'melee_enemy', this);

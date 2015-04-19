@@ -17,6 +17,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var minifyhtml = require('gulp-minify-html');
 var watchify = require('watchify');
 
+
 var paths = {
   assets: 'src/assets/**/*',
   css: 'src/css/*.css',
@@ -27,6 +28,10 @@ var paths = {
     'bower_components/phaser-official/build/phaser.map'
   ],
   js: ['src/js/**/*.js'],
+  tiles: [
+    'art/tiled/**/*.json',
+    'art/tiled/**/*.png'
+  ],
   dist: './dist/'
 };
 
@@ -127,15 +132,21 @@ gulp.task('html', function() {
     .pipe(reload({stream: true}));
 });
 
+gulp.task('tiles', function () {
+  return gulp.src(paths.tiles)
+    .pipe(gulp.dest('dist/assets/tiles'))
+    .pipe(reload({stream: true}));
+});
+
 gulp.task('release', function (callback) {
   runSequence('clean',
-    ['lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles'],
+    ['lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles', 'tiles'],
     callback);
 });
 
 gulp.task('build', function (callback) {
   runSequence('clean',
-    ['dev_lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles'],
+    ['dev_lint', 'copy-assets', 'copy-vendor', 'html', 'js', 'styles', 'tiles'],
     callback);
 });
 
@@ -146,6 +157,10 @@ gulp.task('browser-sync', function() {
   gulp.watch('src/styles/**/*.less', ['styles']);
   gulp.watch('src/*.html', ['html']);
   gulp.watch(paths.assets, ['copy-assets']);
+  // When Tiled writes out an exported json file, it takes a few beats to
+  // actually write the file contents. Raising the interval time to try and get
+  // gulp to not read the file before it's fully written.
+  gulp.watch(paths.tiles, {interval: 5000}, ['tiles']);
   return watch();
 });
 

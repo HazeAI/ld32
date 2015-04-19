@@ -26,6 +26,12 @@ class Preloader {
       'minecraftia',
       'assets/minecraftia.png',
       'assets/minecraftia.xml');
+
+    this.load.tilemap('garbage',
+      'assets/tiles/garbage.json',
+      null,
+      Phaser.Tilemap.TILED_JSON);
+    this.load.image('gameTiles', 'assets/tiles/img/tiles.png');
   }
   create() {
     this.asset.cropEnabled = false;
