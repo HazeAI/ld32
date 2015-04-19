@@ -9,9 +9,13 @@ TODO: Implement Score, Lives, Health
 */
 
 const Player = require('player');
-const {Drone, RangedDrone,
-       Chaser, RangedChaser} = require('enemy');
-const {randomize} = require('weapon');
+const {
+  Drone,
+  RangedDrone,
+  Chaser,
+  RangedChaser
+} = require('enemy');
+const { randomize } = require('weapon');
 
 class Game {
   constructor() {
@@ -38,6 +42,7 @@ class Game {
   }
 
   update() {
+    this.camera.x =  this.camera.x + (this.time.elapsedMS / 9);
     this.player.update();
     this.enemy.update();
     this.otherEnemy.update();
