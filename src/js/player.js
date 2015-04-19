@@ -13,6 +13,8 @@ class Player {
     this.vis.fixedToCamera = true;
     this.game.physics.arcade.enable(this.vis);
     this.vis.body.collideWorldBounds = true;
+      
+    this.score = 0;
     
     this.weapon = null;
 

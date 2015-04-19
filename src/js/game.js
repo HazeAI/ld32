@@ -20,6 +20,7 @@ const { randomize } = require('weapon');
 class Game {
   constructor() {
     this.player = null;
+    this.scoreText = null;
   }
 
   create() {
@@ -32,6 +33,9 @@ class Game {
     this.backgroundlayer.resizeWorld();
 
     this.player = new Player(x, y, 'player', this);
+      
+    this.scoreText = this.add.bitmapText(this.game.width/2, 10, 'minecraftia', 'SCORE: '+this.player.score);
+    this.scoreText.fixedToCamera = true;
       
     this.enemies = new Phaser.Group(this.game, this.game.world,
                                     'Enemies', false, true,
@@ -60,6 +64,8 @@ class Game {
                    this.game.rnd.between(0, this.game.height));
       }
     }, this);
+      
+    this.scoreText.text = 'SCORE: '+this.player.score;
 
   }
     
@@ -67,6 +73,7 @@ class Game {
     console.log('hit');
     bullet.kill();
     enemy.kill();
+    this.player.score += 1;
   }
   
   rndWeapon() {
