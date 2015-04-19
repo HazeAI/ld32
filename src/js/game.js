@@ -42,6 +42,7 @@ class Game {
   }
 
   update() {
+    // FIXME: what is this '9' mean?
     this.camera.x += (this.time.elapsedMS / 9);
     this.player.update();
     this.enemy.update();
@@ -60,14 +61,8 @@ class Game {
   }
 
   setupKeyboard() {
-    // TODO: arrow keys!
-    
-    let fire = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    fire.onDown.add(this.player.fire, this.player);
-    fire.onUp.add(this.player.ceaseFire, this.player);
-    
-    let next_weapon = this.input.keyboard.addKey(Phaser.Keyboard.TAB);
-    next_weapon.onDown.add(this.rndWeapon, this);
+    let random_weapon = this.input.keyboard.addKey(Phaser.Keyboard.TAB);
+    random_weapon.onDown.add(this.rndWeapon, this);
   }
 
   // Input

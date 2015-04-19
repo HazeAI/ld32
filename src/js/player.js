@@ -10,22 +10,21 @@ class Player {
     this.vis.anchor.setTo(0.5, 0.5);
     this.vis.scale.x = 0.25;
     this.vis.scale.y = 0.25;
+    this.vis.fixedToCamera = true;
     
     this.weapon = null;
 
-    this.speed = 10;
+    this.movement_direction = new Phaser.Point();
+    this.movement_direction.x = 0.0;
+    this.movement_direction.y = 0.0;
+    this.movement_speed = 1.0;
 
-    this.should_fire = false;
+    this.setupKeyboard();
+    this.setupGamepad();
   }
 
-  // TODO: properties?
-  getPosX() {
-    return this.vis.position.x;
-  }
-
-  // TODO: properties?
-  getPosY() {
-    return this.vis.position.y;
+  getPosition() {
+    return this.vis.position;
   }
 
   warpTo(x, y) {
@@ -33,22 +32,14 @@ class Player {
     this.vis.position.y = y;
   }
 
-  // TODO: frame delta!
-  moveX(factor) {
-    this.vis.position.x += (factor * this.speed);
-  }
-
-  // TODO: frame delta!
-  moveY(factor) {
-    this.vis.position.y += (factor * this.speed);
-  }
-
   fire() {
-    this.should_fire = true;
+    if (this.weapon) {
+      this.weapon.fire(this.vis);
+    }
   }
 
-  ceaseFire() {
-    this.should_fire = false;
+  bomb() {
+    // maybe
   }
 
   setWeapon(weapon) {
@@ -56,19 +47,57 @@ class Player {
   }
 
   update() {
-    console.debug('player update');
-    // TODO: rather than move instantly, have the move functions update state that
-    //       then get applied here when the update function is called from the game.
+    // vertical motion
+    let vertical_movement = 0.0;
+    if(this.up_key.isDown) {
+      vertical_movement += -1.0;
+    }
+    if (this.down_key.isDown) {
+      vertical_movement +=  1.0;
+    }
 
-    // FIXME: Probably want to update the movement of the player to use fixedToCamera
-    // http://phaser.io/docs/2.3.0/Phaser.Sprite.html#fixedToCamera
-    this.vis.position.x = this.game.input.position.x + this.vis.deltaX;
-    this.vis.position.y = this.game.input.position.y;
+    // horizontal motion
+    let horizontal_movement = 0.0;
+    if (this.left_key.isDown) {
+      horizontal_movement += -1.0;
+    }
+    if (this.right_key.isDown) {
+      horizontal_movement +=  1.0;
+    }
 
-    if (this.should_fire) {
-      this.weapon.fire(this.vis);
+    // update movement vector
+    this.movement_direction.x = (horizontal_movement * this.movement_speed);
+    this.movement_direction.y = (vertical_movement * this.movement_speed);
+    console.debug(this.movement_direction);
+
+    // Update sprite position
+    this.vis.position.x = this.vis.position.x + this.movement_direction.x;
+    this.vis.position.y = this.vis.position.y + this.movement_direction.y;
+    console.debug(this.vis.position);
+
+    // firearm discharge
+    if (this.fire_key.isDown) {
+      this.fire();
     }
   }
+
+  ////////////////////////////////////////////////////////////////////////
+  // Input
+
+  setupGamepad() {
+    // TODO
+  }
+
+  setupKeyboard() {
+    this.up_key    = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+    this.down_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    this.left_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    this.right_key = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    this.fire_key  = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+  }
+
+  // Input
+  ////////////////////////////////////////////////////////////////////////
 }
 
 module.exports = Player;
