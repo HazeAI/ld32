@@ -16,8 +16,6 @@ class Enemy extends Phaser.Sprite {
     this.anchor.setTo(0.5, 0.5);
     this.scale.x = 0.25;
     this.scale.y = 0.25;
-    this.checkWorldBounds = true;
-    this.outOfBoundsKill = true;
     this.exists = false;
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
       

@@ -25,9 +25,6 @@ class Game {
   create() {
     const x = this.game.width / 2;
     const y = this.game.height / 2;
-    
-    this.game.world.setBounds(0, 0, 
-                              this.game.width, this.game.height);
 
     this.map = this.game.add.tilemap('garbage');
     this.map.addTilesetImage('tiles', 'gameTiles');
@@ -35,10 +32,13 @@ class Game {
     this.backgroundlayer.resizeWorld();
 
     this.player = new Player(x, y, 'player', this);
-    this.enemy = new Drone('melee_enemy', this);
-    this.otherEnemy = new RangedDrone('melee_enemy', this);
-    this.enemy.reset(this.game.width, y);
-    this.otherEnemy.reset(this.game.width, y);
+      
+    this.enemies = new Phaser.Group(this.game, this.game.world,
+                                    'Enemies', false, true,
+                                    Phaser.Physics.ARCADE);
+    for (var i = 0 ; i < 3 ; i++) {
+      this.enemies.add(new RangedDrone('melee_enemy', this));   
+    }
 
     this.rndWeapon();
 
@@ -49,18 +49,17 @@ class Game {
   update() {
     this.camera.x += (this.time.elapsedMS / 9);
     this.player.update();
-    this.enemy.update();
-    this.otherEnemy.update();
-    this.physics.arcade.overlap(this.player.weapon, this.enemy, this.enemyHit, null, this);
-    this.physics.arcade.overlap(this.player.weapon, this.otherEnemy, this.enemyHit, null, this);
-    if (this.enemy.exists == false) {
-      this.enemy.reset(this.game.width+this.game.camera.x,
-                       this.game.rnd.between(0, this.game.height));   
-    }
-    if (this.otherEnemy.exists == false) {
-      this.otherEnemy.reset(this.game.width+this.game.camera.x,
-                      this.game.rnd.between(0, this.game.height));
-    }
+    this.enemies.update();
+    
+    this.physics.arcade.overlap(this.player.weapon, this.enemies, this.enemyHit, null, this);
+      
+    this.enemies.forEach(function(enemy){
+      if (enemy.exists == false) {
+        enemy.reset(this.game.width+this.game.camera.x,
+                   this.game.rnd.between(0, this.game.height));
+      }
+    }, this);
+
   }
     
   enemyHit(bullet, enemy){
