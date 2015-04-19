@@ -50,7 +50,6 @@ class MeleeChaser extends Enemy{
   }
     
   update() {
-    console.log('foo');
     var playerX = this.game.player.getPosX();
     var playerY = this.game.player.getPosY();
     var x = this.getPosX();
