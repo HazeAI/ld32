@@ -38,7 +38,7 @@ TODOS
 With time difference we may need to work for a while with no input from others
 Add features that need to be done, and mark your name if you are working on it.
 
-* Enemy classes
+* Enemy classes __(Kenny)__
 * Bullet Manager __(Kenny)__
 * Bullet collision
 * Player movement/control
