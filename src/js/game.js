@@ -21,6 +21,7 @@ const { randomize } = require('weapon');
 class Game {
   constructor() {
     this.player = null;
+    this.scoreText = null;
   }
 
   create() {
@@ -38,10 +39,16 @@ class Game {
     this.backgroundlayer.resizeWorld();
 
     this.player = new Player(x, y, 'player', this);
-    this.enemy = new Drone('melee_enemy', this);
-    this.otherEnemy = new RangedDrone('melee_enemy', this);
-    this.enemy.reset(this.game.width, y);
-    this.otherEnemy.reset(this.game.width, y);
+      
+    this.scoreText = this.add.bitmapText(this.game.width/2, 10, 'minecraftia', 'SCORE: '+this.player.score);
+    this.scoreText.fixedToCamera = true;
+      
+    this.enemies = new Phaser.Group(this.game, this.game.world,
+                                    'Enemies', false, true,
+                                    Phaser.Physics.ARCADE);
+    for (var i = 0 ; i < 3 ; i++) {
+      this.enemies.add(new RangedDrone('melee_enemy', this));   
+    }
 
     this.rndWeapon();
 
@@ -54,28 +61,25 @@ class Game {
     this.camera.x += (this.time.elapsedMS / 9);
     
     this.player.update();
+    this.enemies.update();
+    this.physics.arcade.overlap(this.player.weapon, this.enemies, this.enemyHit, null, this);
+      
+    this.enemies.forEach(function(enemy){
+      if (enemy.exists == false) {
+        enemy.reset(this.game.width+this.game.camera.x,
+                   this.game.rnd.between(0, this.game.height));
+      }
+    }, this);
+      
+    this.scoreText.text = 'SCORE: '+this.player.score;
 
-    this.enemy.update();
-    this.otherEnemy.update();
-    
-    this.physics.arcade.overlap(this.player.weapon, this.enemy, this.enemyHit, null, this);
-    this.physics.arcade.overlap(this.player.weapon, this.otherEnemy, this.enemyHit, null, this);
-
-    if (this.enemy.exists == false) {
-      this.enemy.reset(this.game.width+this.game.camera.x,
-                       this.game.rnd.between(0, this.game.height));   
-    }
-
-    if (this.otherEnemy.exists == false) {
-      this.otherEnemy.reset(this.game.width+this.game.camera.x,
-                      this.game.rnd.between(0, this.game.height));
-    }
   }
     
   enemyHit(bullet, enemy){
     console.log('hit');
     bullet.kill();
     enemy.kill();
+    this.player.score += 1;
   }
   
   rndWeapon() {

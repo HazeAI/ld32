@@ -12,6 +12,8 @@ class Player {
     this.vis.scale.y = 0.25;
     this.game.physics.arcade.enable(this.vis);
     this.vis.body.collideWorldBounds = true;
+      
+    this.score = 0;
     
     this.weapon = null;
 
