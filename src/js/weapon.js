@@ -11,6 +11,19 @@ TODO: Lob bullet pattern
 
 const { Phaser, PIXI } = global;
 
+
+function wrappedFire(parent) {
+  return function () {
+    try {
+      const child = this.getFirstExists(false);
+      child.fire.apply(child, arguments);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }.bind(parent);
+}
+
+
 class Bullet extends Phaser.Sprite {
 
   constructor(game, spriteName, spriteScale=1, scaleSpeed=0) {
@@ -62,7 +75,7 @@ class Bullet extends Phaser.Sprite {
       this.scale.y += this.scaleSpeed;
     }
       
-    if (this.game.isOnCamera(this) == false) {
+    if (this.game.isOnCamera(this) === false) {
       this.kill();   
     }
   }
@@ -95,7 +108,7 @@ class StraightForward extends Phaser.Group {
     var x = source.x + 10;
     var y = source.y + 10;
 
-    this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed);
+    wrappedFire(this)(x, y, angle, this.bulletSpeed);
 
     this.nextFire = this.game.time.time + this.fireRate;
 
@@ -136,13 +149,9 @@ class Circle extends Phaser.Group {
 
     for (let i = 0; i < this.numBullets; i++) {
       const thisAngle = increment * i;
-      try {
-        this.getFirstExists(false).fire(x+(this.radius*Math.cos(thisAngle)),
+        wrappedFire(this)(x + (this.radius * Math.cos(thisAngle)),
           y + (this.radius*Math.sin(thisAngle)),
           angle, this.bulletSpeed);
-      } catch (err) {
-        console.error(err.message);
-      }
     }
 
     this.nextFire = this.game.time.time + this.fireRate;
@@ -175,19 +184,16 @@ class Spread extends Phaser.Group {
 
       if (this.game.time.time < this.nextFire) { return; }
 
-      var x = source.x + 10;
-      var y = source.y + 10;
+      const x = source.x + 10;
+      const y = source.y + 10;
 
-      var bulletIncrement = this.spread/this.numBullets;
-      var startAngle = angle - this.spread/2 + bulletIncrement/2;
+      const bulletIncrement = this.spread/this.numBullets;
+      const startAngle = angle - this.spread/2 + bulletIncrement/2;
 
-      for (var i = 0; i < this.numBullets; i++) {
-        this.getFirstExists(false)
-          .fire(x, y, startAngle+(bulletIncrement*i),
-                this.bulletSpeed);
-
+      for (let i = 0; i < this.numBullets; i++) {
+        wrappedFire(this)(
+          x, y, startAngle+(bulletIncrement*i), this.bulletSpeed);
       }
-
       this.nextFire = this.game.time.time + this.fireRate;
 
   }
@@ -213,7 +219,7 @@ class BackAndForth extends Phaser.Group {
 
     this.patternIndex = 0;
 
-    for (var i = 0; i < 42*bulletBankScale; i++) {
+    for (let i = 0; i < 42 * bulletBankScale; i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));  
     }
 
@@ -222,10 +228,10 @@ class BackAndForth extends Phaser.Group {
   fire(source, angle=0) {
     if (this.game.time.time < this.nextFire) { return; }
 
-    var x = source.x + 10;
-    var y = source.y + 10;
+    const x = source.x + 10;
+    const y = source.y + 10;
 
-    this.getFirstExists(false).fire(x, y, angle, this.bulletSpeed, 0,
+    wrappedFire(this)(x, y, angle, this.bulletSpeed, 0,
                                    this.pattern[this.patternIndex]);
 
     this.patternIndex++;
@@ -256,23 +262,22 @@ const spriteNames = ['basic_bullet',
                      'house',
                      'monster'];
 
-//var options = [];
 const options = [
-  //Big slow moving bullets
+  // Big slow moving bullets
   {'fireRate':150,
    'spriteScale':2,
    'bulletSpeed':600,
    'scaleSpeed':0,
    'bulletBankScale':3},
   
-  //Growing bullets
+  // Growing bullets
   {'fireRate':150,
    'spriteScale':1,
    'bulletSpeed':900,
    'scaleSpeed':10,
    'bulletBankScale':1},
   
-  //High rate of fire
+  // High rate of fire
   {'fireRate':300,
    'spriteScale':0.5,
    'bulletSpeed':900,
@@ -291,6 +296,10 @@ function randomize(game) {
                    thisOptions.bulletBankScale);
 }
 
-module.exports = {StraightForward: StraightForward,
-                  Spread: Spread, BackAndForth: BackAndForth,
-                  Circle: Circle, randomize: randomize};
+module.exports = {
+  StraightForward,
+  Spread,
+  BackAndForth,
+  Circle,
+  randomize
+};
