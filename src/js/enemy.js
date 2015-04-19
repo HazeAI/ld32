@@ -21,7 +21,7 @@ class Enemy extends Phaser.Sprite {
       
     this.weapon = null;
       
-    this.speed = 5;
+    this.speed = 2;
       
     this.should_fire = false;
   }

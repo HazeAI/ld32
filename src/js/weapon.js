@@ -82,7 +82,7 @@ class StraightForward extends Phaser.Group {
     this.bulletSpeed = bulletSpeed;
     this.fireRate = fireRate;
 
-    for (var i = 0; i < 64*bulletBankScale; i++) {
+    for (var i = 0; i < 24*bulletBankScale; i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));
     }
 
@@ -118,7 +118,7 @@ class Circle extends Phaser.Group {
     this.radius = radius;
     this.numBullets = numBullets;
 
-    for (var i = 0; i < (48*numBullets*bulletBankScale); i++) {
+    for (var i = 0; i < (24*numBullets*bulletBankScale); i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));
     }
 
@@ -163,7 +163,7 @@ class Spread extends Phaser.Group {
     this.spread = spread;
     this.numBullets = numBullets;
 
-    for (var i = 0; i < (this.numBullets*64*bulletBankScale); i++) {
+    for (var i = 0; i < (this.numBullets*22*bulletBankScale); i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));  
     }
 
@@ -211,7 +211,7 @@ class BackAndForth extends Phaser.Group {
 
     this.patternIndex = 0;
 
-    for (var i = 0; i < 128*bulletBankScale; i++) {
+    for (var i = 0; i < 42*bulletBankScale; i++) {
       this.add(new Bullet(game, spriteName, spriteScale, scaleSpeed));  
     }
 
@@ -248,21 +248,21 @@ const spriteNames = ['basic_bullet',
 //var options = [];
 const options = [
   //Big slow moving bullets
-  {'fireRate':20,
+  {'fireRate':150,
    'spriteScale':5,
    'bulletSpeed':600,
    'scaleSpeed':0,
    'bulletBankScale':3},
   
   //Growing bullets
-  {'fireRate':20,
+  {'fireRate':150,
    'spriteScale':1,
    'bulletSpeed':900,
    'scaleSpeed':10,
    'bulletBankScale':1},
   
   //High rate of fire
-  {'fireRate':40,
+  {'fireRate':300,
    'spriteScale':3,
    'bulletSpeed':900,
    'scaleSpeed':0,

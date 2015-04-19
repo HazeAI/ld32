@@ -70,12 +70,10 @@ class Player {
     // update movement vector
     this.movement_direction.x = (horizontal_movement * this.movement_speed);
     this.movement_direction.y = (vertical_movement * this.movement_speed);
-    console.debug(this.movement_direction);
 
     // Update sprite position
     this.vis.position.x = this.vis.position.x + this.movement_direction.x;
     this.vis.position.y = this.vis.position.y + this.movement_direction.y;
-    console.debug(this.vis.position);
 
     // firearm discharge
     if (this.fire_key.isDown) {
