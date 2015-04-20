@@ -10,6 +10,47 @@
          "width":2500,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":45,
+         "name":"spawnPoints",
+         "objects":[
+                {
+                 "height":476,
+                 "name":"spawn1",
+                 "properties":
+                    {
+                     "count":"4",
+                     "empty":"false",
+                     "entity":"RangedDrone"
+                    },
+                 "type":"spawn",
+                 "visible":true,
+                 "width":466,
+                 "x":12008,
+                 "y":116
+                }, 
+                {
+                 "height":476,
+                 "name":"spawn2",
+                 "properties":
+                    {
+                     "count":"8",
+                     "empty":"false",
+                     "entity":"RangedDrone"
+                    },
+                 "type":"spawn",
+                 "visible":true,
+                 "width":466,
+                 "x":13543,
+                 "y":154
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":2500,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
