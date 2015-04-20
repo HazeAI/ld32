@@ -94,6 +94,8 @@ class Player extends Phaser.Group {
     this.vis.position.x = this.vis.position.x + this.movement_direction.x;
     this.vis.position.y = this.vis.position.y + this.movement_direction.y;
 
+    //this.weapon.update();
+      
     // firearm discharge
     if (this.fire_key.isDown || this.pad.isDown(dpad_fire)) {
       this.fire();
